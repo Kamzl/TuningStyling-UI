@@ -143,9 +143,16 @@ public enum TuningDetails
             var actions = _delayedActions.ToArray();
             foreach (var (time, act) in actions)
             {
-                if (time >= DateTime.Now)
+                if (time <= DateTime.Now)
                 {
-                    act();
+                    try
+                    {
+                        act();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError(e);
+                    }
                     _delayedActions.Remove((time, act));
                 }
             }
@@ -224,6 +231,7 @@ public enum TuningDetails
             Assert.IsTrue(SpendMoney(_prices[_performanceData[type]]));
             _performanceData[type]++;
             _tuningScreen?.AddPerformanceDetail(type, _performanceData[type], _prices[_performanceData[type]], ((int) type & 1) + 2);
+            _tuningScreen?.PerformanceDetailComplete();
             Debug.Log($"BuyPerformanceDetail {type} {buyType}");
         }
         

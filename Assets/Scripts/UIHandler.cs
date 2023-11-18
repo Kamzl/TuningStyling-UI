@@ -142,8 +142,8 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     private WheelEditType currentEditWheelType;
     private float currentEditWheelMultiplier;
 
-    private Vector2 tuningBuyPos = new Vector2(-363, -275);
-    private Vector2 stylingBuyPos = new Vector2(-363, -345);
+    private Vector2 tuningBuyPos = new Vector2(-363, 265);
+    private Vector2 stylingBuyPos = new Vector2(-363, 195);
 
     private Image activeButtonImage;
     private Image activeSecondaryButtonImage;
@@ -337,6 +337,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
             buyPriceAcceptText.color = yellowColor;
             buyAcceptButton.onClick.RemoveAllListeners();
             buyAcceptButton.onClick.AddListener(new UnityEngine.Events.UnityAction(action));
+            buyAcceptButton.onClick.AddListener(() => { buyAcceptObject.SetActive(false); });
         };
     }
 
@@ -347,15 +348,20 @@ public class UIHandler : MonoBehaviour, ITuningScreen
 
     private void ShowDonateConfirmation()
     {
-        if (donatePrice <= donateBalance)
+        if (tuningLevels[currentTuningDetail].donatePrice > 0)       //donatePrice <= donateBalance
         {
             onMoneySelect?.Invoke();
             buyAcceptObject.SetActive(true);
         }
-        buyPriceAcceptText.text = $"${donatePrice}";
+        buyPriceAcceptText.text = $"${0}";
         buyPriceAcceptText.color = purpleColor;
         buyAcceptButton.onClick.RemoveAllListeners();
-        buyAcceptButton.onClick.AddListener(() => testServer.BuyPerformanceDetail(currentTuningDetail, BuyType.Donate));
+        buyAcceptButton.onClick.AddListener(() => 
+        {
+            testServer.BuyPerformanceDetail(currentTuningDetail, BuyType.Donate);
+            tuningLevels[currentTuningDetail] = (tuningLevels[currentTuningDetail].level, tuningLevels[currentTuningDetail].price, tuningLevels[currentTuningDetail].donatePrice - 1);
+            buyAcceptObject.SetActive(false);
+        });
         TuningScrollPress(currentTuningDetail);
     }
 
@@ -697,7 +703,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     public void PerformanceDetailComplete()
     {
         Debug.Log("Finish");
-        OpenTuning();
+        // OpenTuning();
     }
 
     public void AddBodyDetail(int id, int price)

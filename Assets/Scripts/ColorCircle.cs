@@ -18,6 +18,8 @@ public class ColorCircle : MonoBehaviour, IPointerDownHandler, IDragHandler
     private float brightness;
 
     private Color color = new Color();
+
+    private float scale = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,10 +51,14 @@ public class ColorCircle : MonoBehaviour, IPointerDownHandler, IDragHandler
     private void ChangePointerPosition(Vector2 position)
     {
         Vector2 temp;
-        temp = position - (Vector2)parentCircle.position;
-        pointerCircle.localPosition = Vector2.ClampMagnitude(temp, parentCircle.sizeDelta.x / 2);
+        float radius = parentCircle.sizeDelta.x / 2;
+        scale = parentCircle.lossyScale.x;
+        temp = (position - (Vector2)parentCircle.position) / scale;
+        pointerCircle.localPosition = Vector2.ClampMagnitude(temp, radius);
         hue = Mathf.Repeat(Mathf.Atan2(temp.x, temp.y), Mathf.PI * 2) / (Mathf.PI * 2);
-        saturation = temp.magnitude / (parentCircle.sizeDelta.x / 2);
+        saturation = Vector2.ClampMagnitude(temp, radius).magnitude / radius;
+        Debug.Log(saturation);
+        Debug.Log(temp.magnitude / (radius));
         ChangeColor();
     }
 
