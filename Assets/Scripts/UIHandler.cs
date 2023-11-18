@@ -324,14 +324,12 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     {
         string tempPriceText = NumberSplit(price);
         this.buyButtonText.text = buyButtonText;
-        Debug.Log($"1 {upgradeName} {tempPriceText}");
         priceText.text = tempPriceText;
         buyGameObject.SetActive(true);
         this.price = price;
         buyButton.onClick.RemoveAllListeners();
         buyButton.onClick.AddListener(ShowConfirmation);
         onMoneySelect = () => {
-            Debug.Log($"2 {upgradeName} {tempPriceText}");
             buyUpgradeName.text = upgradeName;
             buyPriceAcceptText.text = $"${tempPriceText}";
             buyPriceAcceptText.color = yellowColor;
@@ -426,13 +424,11 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         bodyContentShownNum = -1;
         bodyPartNameText.text = "СТАНДАРТНЫЙ";
         currentBodyDetailType = type;
-        Debug.Log($"Body Content {type}");
         testServer.GetDetails(type);
     }
 
     private void BodyContentArrowPressed(bool isForward)
     {
-        Debug.Log($"Номер сейчас {bodyContentShownNum}");
         bodyContentShownNum += isForward ? 1 : -1;
         if (bodyContentShownNum < -1) bodyContentShownNum = bodyDetails.Count - 1;
         else if (bodyContentShownNum >= bodyDetails.Count) bodyContentShownNum = -1;
@@ -613,13 +609,11 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         if(button) StylingButtonPress(button, hydraulicsObject);
         if (isInstalledHydraulics)
         {
-            Debug.Log("Aga");
             SelectItem(hydraulicsRemovePrice, "Снятие гидравлики", () => testServer.BuyHydraulic(true), "СНЯТЬ");
             hydraulicsText.text = "УСТАНОВЛЕНА";
         }
         else
         {
-            Debug.Log("Hui");
             SelectItem(hydraulicsInstallPrice, "Установка гидравлики", () => testServer.BuyHydraulic(false), "УСТАНОВИТЬ");
             hydraulicsText.text = "ОТСУТСТВУЕТ";
         }
@@ -702,19 +696,16 @@ public class UIHandler : MonoBehaviour, ITuningScreen
 
     public void PerformanceDetailComplete()
     {
-        Debug.Log("Finish");
         // OpenTuning();
     }
 
     public void AddBodyDetail(int id, int price)
     {
-        Debug.Log($"Номер {id} Цена {price}");
         bodyDetailsTemp.Add((id, price));
     }
 
     public void BodyDetailComplete()
     {
-        Debug.Log("Финиш");
         bodyDetails = bodyDetailsTemp;
         bodyDetailsTemp = new();
         SetActiveContent(bodyContentObject);
