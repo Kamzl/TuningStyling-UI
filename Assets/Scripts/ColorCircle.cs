@@ -20,23 +20,12 @@ public class ColorCircle : MonoBehaviour, IPointerDownHandler, IDragHandler
     private Color color = new Color();
 
     private float scale = 1;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     private void Awake()
     {
         ChangeColor();
         sliderValueBrightness.onValueChanged.AddListener(delegate { ChangeColor(); });
         sliderValueTransparency.onValueChanged.AddListener(delegate { ChangeColor(); });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void OnPointerDown(PointerEventData pointerEventData)
@@ -65,16 +54,13 @@ public class ColorCircle : MonoBehaviour, IPointerDownHandler, IDragHandler
     private void ChangeColor()
     {
         color = Color.HSVToRGB(hue, saturation, 1);
-        Debug.Log($"1 {color}");
         sliderBackgroundBrightness.color = color;
-        Debug.Log($"2 {color}");
         if (sliderBackgroundTransparency)
         {
             color = Color.HSVToRGB(hue, saturation, sliderValueBrightness.value);
             color.a = sliderValueTransparency.value;
             sliderBackgroundTransparency.color = Color.HSVToRGB(hue, saturation, sliderValueBrightness.value);
         }
-        Debug.Log($"3 {color} {color.a}");
     }
 
     public Color GetColor()

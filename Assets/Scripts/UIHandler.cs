@@ -76,11 +76,8 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     [SerializeField] ColorCircle colorCircle;
 
     private int balance = 0;
-    private int donateBalance = 10000;
     private int price = 0;
-    private int donatePrice = 0;
     private Action onMoneySelect;
-    private Action onDonateSelect;
 
     private Dictionary<TuningDetails, (int level, int price, int donatePrice)> tuningLevels;
     private int[][] tuningUpgradeValues = new int[(int)TuningDetails.Max][]
@@ -179,11 +176,12 @@ public class UIHandler : MonoBehaviour, ITuningScreen
 
     private Dictionary<int, int> wheelsPrices;
 
-    void Start()
+
+    private void Awake()
     {
-        tuningLevels = new ();
+        tuningLevels = new();
         nitroPrices = new List<int>();
-        editWheelsPrices = new ();
+        editWheelsPrices = new();
 
         activeButtonImage = tuningScroll[0].GetComponent<Image>();
 
@@ -211,7 +209,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
             int temp = i;
             tuningScroll[i].onClick.AddListener(() => TuningScrollPress((TuningDetails)temp));
         }
-
+        
         for (int i = 1; i < discsCustomScroll.Count; i++)
         {
             int temp = i - 1;
@@ -222,7 +220,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         for (int i = 1; i < tintScroll.Count; i++)
         {
             int temp = i - 1;
-            tintScroll[temp + 1].onClick.AddListener(() => StylingColorPress((ColorsType) temp, tintScroll[temp + 1]));
+            tintScroll[temp + 1].onClick.AddListener(() => StylingColorPress((ColorsType)temp, tintScroll[temp + 1]));
         }
         tintScroll[0].onClick.AddListener(() => OpenStyling());
 
@@ -245,11 +243,6 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         testServer.GetEditWheels();
         testServer.GetWheels();
         testServer.GetVinyls();
-    }
-
-    private void Awake()
-    {
-        
     }
 
     private void OpenTuning()
@@ -387,7 +380,6 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     {
         SelectItem(tuningLevels[type].price, $"{tuningUpgradeName[type]}{tuningLevels[type].level + 1} уровня", () => BuyTuningDetail(type));
 
-        donatePrice = tuningLevels[type].donatePrice;
         currentTuningDetail = type;
 
         SetActiveButtonImage(tuningScroll[(int)type].GetComponent<Image>());
@@ -447,6 +439,8 @@ public class UIHandler : MonoBehaviour, ITuningScreen
 
     private void StylingColorPress(ColorsType type, Button button)
     {
+        RemoveSelectItem();
+
         testServer.GetColorsPrice(type);
 
         selectedColorTransparency = transparentColors.Contains(type);
@@ -685,7 +679,6 @@ public class UIHandler : MonoBehaviour, ITuningScreen
                 tuningCurrentSlider[i].value = 0;
                 for(TuningDetails x = TuningDetails.Engine; x < TuningDetails.Max; x++)
                 {
-                    Debug.Log($"{x} {(int)x} {i}");
                     temp += tuningUpgradeValues[(int)x][i] * tuningLevels[x].level;
                 }
                 tuningCurrentSlider[i].value += temp;

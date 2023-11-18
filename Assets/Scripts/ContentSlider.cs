@@ -10,16 +10,6 @@ public class ContentSlider : MonoBehaviour
     [SerializeField] Transform thisTransform;
     [SerializeField] ContentSliderRow rowScript;
     private int rowCount = 0;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public Button addDetail()
     {
