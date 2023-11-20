@@ -86,6 +86,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         new [] {0, 0, 0, 10},
     };
     private TuningDetails _currentTuningDetail;
+    private int[] _tuningValues = new int[4];
     private bool _isInitialTuning = true;
 
     private readonly Dictionary<TuningDetails, string> _tuningUpgradeName = new Dictionary<TuningDetails, string>
@@ -135,8 +136,8 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     private WheelEditType _currentEditWheelType;
     private float _currentEditWheelMultiplier;
 
-    private Vector2 _tuningBuyPos = new Vector2(-363, 265);
-    private Vector2 _stylingBuyPos = new Vector2(-363, 195);
+    private readonly Vector2 _tuningBuyPos = new Vector2(-363, 265);
+    private readonly Vector2 _stylingBuyPos = new Vector2(-363, 195);
 
     private Image _activeButtonImage;
     private Image _activeSecondaryButtonImage;
@@ -228,15 +229,6 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         stylingScroll[9].onClick.AddListener(() => StylingSuspensionPress(stylingScroll[9]));
         stylingScroll[10].onClick.AddListener(() => StylingNitroPress(stylingScroll[10]));
         stylingScroll[11].onClick.AddListener(() => StylingHydraulicsPress(stylingScroll[11]));
-
-        testServer.GetSuspension();
-        testServer.GetNitroData();
-        testServer.GetHydraulicsData();
-        testServer.GetEditWheels();
-        testServer.GetWheels();
-        testServer.GetVinyls();
-        _selectedColorType = ColorsType.TonerFront;
-        testServer.GetColorsPrice(_selectedColorType);
     }
 
     private void OpenTuning()
@@ -379,7 +371,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
             for (int i = 0; i < 4; i++)
             {
                 int upgradeValue = _tuningUpgradeValues[(int)type][i];
-                float futureValue = tuningCurrentSlider[i].value + upgradeValue;
+                float futureValue = _tuningValues[i] + upgradeValue;
                 tuningFutureSlider[i].value = futureValue;
                 tuningFutureText[i].text = (futureValue).ToString();
                 tuningDifferenceText[i].text = upgradeValue >= 0 ? $"+{upgradeValue}" : upgradeValue.ToString();
@@ -607,13 +599,19 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         if(button) StylingButtonPress(button, hydraulicsObject);
         if (_isInstalledHydraulics)
         {
-            SelectItem(_hydraulicsRemovePrice, "Снятие гидравлики", () => testServer.BuyHydraulic(true), "СНЯТЬ");
             hydraulicsText.text = "УСТАНОВЛЕНА";
+            if (!_isInitialTuning)
+            {
+                SelectItem(_hydraulicsRemovePrice, "Снятие гидравлики", () => testServer.BuyHydraulic(true), "СНЯТЬ");
+            }
         }
         else
         {
-            SelectItem(_hydraulicsInstallPrice, "Установка гидравлики", () => testServer.BuyHydraulic(false), "УСТАНОВИТЬ");
             hydraulicsText.text = "ОТСУТСТВУЕТ";
+            if (!_isInitialTuning)
+            {
+                SelectItem(_hydraulicsInstallPrice, "Установка гидравлики", () => testServer.BuyHydraulic(false), "УСТАНОВИТЬ");
+            }
         }
     }
 
@@ -661,7 +659,16 @@ public class UIHandler : MonoBehaviour, ITuningScreen
 
     public void Open(int balance)
     {
+        _isInitialTuning = true;
         SetBalance(balance);
+        testServer.GetSuspension();
+        testServer.GetNitroData();
+        testServer.GetHydraulicsData();
+        testServer.GetEditWheels();
+        testServer.GetWheels();
+        testServer.GetVinyls();
+        _selectedColorType = ColorsType.TonerFront;
+        testServer.GetColorsPrice(_selectedColorType);
         testServer.GetPerformanceData();
     }
 
@@ -681,12 +688,14 @@ public class UIHandler : MonoBehaviour, ITuningScreen
             {
                 int temp = 0;
                 tuningCurrentSlider[i].value = 0;
+                _tuningValues[i] = 0;
                 for(TuningDetails x = TuningDetails.Engine; x < TuningDetails.Max; x++)
                 {
                     temp += _tuningUpgradeValues[(int)x][i] * _tuningLevels[x].level;
                 }
                 tuningCurrentSlider[i].value += temp;
-                tuningCurrentText[i].text = tuningCurrentSlider[i].value.ToString();
+                _tuningValues[i] += temp;
+                tuningCurrentText[i].text = _tuningValues[i].ToString();
             }
         }
 
