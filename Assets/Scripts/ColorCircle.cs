@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -13,13 +11,13 @@ public class ColorCircle : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField] Slider sliderValueTransparency;
     [SerializeField] Image sliderBackgroundTransparency;
 
-    private float hue;
-    private float saturation;
-    private float brightness;
+    private float _hue;
+    private float _saturation;
+    private float _brightness;
 
-    private Color color = new Color();
+    private Color _color;
 
-    private float scale = 1;
+    private float _scale = 1;
 
     private void Awake()
     {
@@ -30,41 +28,41 @@ public class ColorCircle : MonoBehaviour, IPointerDownHandler, IDragHandler
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        ChangePointerPosition((Vector2)pointerEventData.position);
+        ChangePointerPosition(pointerEventData.position);
     }
     public void OnDrag(PointerEventData data)
     {
-        ChangePointerPosition((Vector2)data.position);
+        ChangePointerPosition(data.position);
     }
 
     private void ChangePointerPosition(Vector2 position)
     {
         Vector2 temp;
         float radius = parentCircle.sizeDelta.x / 2;
-        scale = parentCircle.lossyScale.x;
-        temp = (position - (Vector2)parentCircle.position) / scale;
+        _scale = parentCircle.lossyScale.x;
+        temp = (position - (Vector2)parentCircle.position) / _scale;
         pointerCircle.localPosition = Vector2.ClampMagnitude(temp, radius);
-        hue = Mathf.Repeat(Mathf.Atan2(temp.x, temp.y), Mathf.PI * 2) / (Mathf.PI * 2);
-        saturation = Vector2.ClampMagnitude(temp, radius).magnitude / radius;
-        Debug.Log(saturation);
+        _hue = Mathf.Repeat(Mathf.Atan2(temp.x, temp.y), Mathf.PI * 2) / (Mathf.PI * 2);
+        _saturation = Vector2.ClampMagnitude(temp, radius).magnitude / radius;
+        Debug.Log(_saturation);
         Debug.Log(temp.magnitude / (radius));
         ChangeColor();
     }
 
     private void ChangeColor()
     {
-        color = Color.HSVToRGB(hue, saturation, 1);
-        sliderBackgroundBrightness.color = color;
+        _color = Color.HSVToRGB(_hue, _saturation, 1);
+        sliderBackgroundBrightness.color = _color;
         if (sliderBackgroundTransparency)
         {
-            color = Color.HSVToRGB(hue, saturation, sliderValueBrightness.value);
-            color.a = sliderValueTransparency.value;
-            sliderBackgroundTransparency.color = Color.HSVToRGB(hue, saturation, sliderValueBrightness.value);
+            _color = Color.HSVToRGB(_hue, _saturation, sliderValueBrightness.value);
+            _color.a = sliderValueTransparency.value;
+            sliderBackgroundTransparency.color = Color.HSVToRGB(_hue, _saturation, sliderValueBrightness.value);
         }
     }
 
     public Color GetColor()
     {
-        return color;
+        return _color;
     }
 }

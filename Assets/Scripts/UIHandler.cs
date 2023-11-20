@@ -1,86 +1,81 @@
+
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Linq;
 
 public class UIHandler : MonoBehaviour, ITuningScreen
 {
-    private enum TuningCharacteristics
-    {
-        Level,
-        Price
-    }
-
-    [SerializeField] GameObject tuningGameObject;
-    [SerializeField] GameObject stylingGameObject;
-    [SerializeField] GameObject stylingScrollObject;
-    [SerializeField] SuperDuperService testServer;
-    [SerializeField] ContentSlider wheelsSlider;
-    [SerializeField] ContentSlider vinylSlider;
+    [SerializeField] private GameObject tuningGameObject;
+    [SerializeField] private GameObject stylingGameObject;
+    [SerializeField] private GameObject stylingScrollObject;
+    [SerializeField] private SuperDuperService testServer;
+    [SerializeField] private ContentSlider wheelsSlider;
+    [SerializeField] private ContentSlider vinylSlider;
     [Space]
-    [Header(" ÌÓÔÍË")]
-    [SerializeField] Button tuningButton;
-    [SerializeField] List<Button> tuningScroll;
-    [SerializeField] Button stylingButton;
-    [SerializeField] List<Button> stylingScroll;
-    [SerializeField] List<Button> bodyScroll;
-    [SerializeField] List<Button> discsCustomScroll;
-    [SerializeField] List<Button> tintScroll;
+    [Header("–ö–Ω–æ–ø–∫–∏")]
+    [SerializeField] private Button tuningButton;
+    [SerializeField] private List<Button> tuningScroll;
+    [SerializeField] private Button stylingButton;
+    [SerializeField] private List<Button> stylingScroll;
+    [SerializeField] private List<Button> bodyScroll;
+    [SerializeField] private List<Button> discsCustomScroll;
+    [SerializeField] private List<Button> tintScroll;
     [Space]
-    [Header("œÓ‰Ú‚ÂÊ‰ÂÌËÂ ÔÓÍÛÔÍË")]
-    [SerializeField] Button buyButton;
-    [SerializeField] Button buyDonateButton;
-    [SerializeField] GameObject buyAcceptObject;
-    [SerializeField] TextMeshProUGUI buyUpgradeName;
-    [SerializeField] TextMeshProUGUI buyPriceAcceptText;
-    [SerializeField] Button buyAcceptButton;
-    [SerializeField] Button buyCancelButton;
+    [Header("–ü–æ–¥—Ç–≤–µ—Ä–∂–¥–µ–Ω–∏–µ –ø–æ–∫—É–ø–∫–∏")]
+    [SerializeField]
+    private Button buyButton;
+    [SerializeField] private Button buyDonateButton;
+    [SerializeField] private GameObject buyAcceptObject;
+    [SerializeField] private TextMeshProUGUI buyUpgradeName;
+    [SerializeField] private TextMeshProUGUI buyPriceAcceptText;
+    [SerializeField] private Button buyAcceptButton;
+    [SerializeField] private Button buyCancelButton;
     [Space]
-    [SerializeField] List<TuningButton> tuningButtons;
-    [SerializeField] List<Slider> tuningCurrentSlider;
-    [SerializeField] List<TextMeshProUGUI> tuningCurrentText;
-    [SerializeField] List<Slider> tuningFutureSlider;
-    [SerializeField] List<TextMeshProUGUI> tuningFutureText;
-    [SerializeField] List<TextMeshProUGUI> tuningDifferenceText;
-    [SerializeField] TextMeshProUGUI balanceText;
-    [SerializeField] TextMeshProUGUI priceText;
-    [SerializeField] TextMeshProUGUI buyButtonText;
-    [SerializeField] GameObject buyGameObject;
-    [SerializeField] GameObject buyDonateButtonGameObject;
-    [SerializeField] RectTransform buyTransform;
-    [SerializeField] GameObject bodyScrollObject;
-    [SerializeField] GameObject bodyContentObject;
-    [SerializeField] Button bodyArrowNext;
-    [SerializeField] Button bodyArrowPrevious;
-    [SerializeField] TextMeshProUGUI bodyPartNameText;
-    [SerializeField] GameObject colorWheel;
-    [SerializeField] GameObject transparencySlider;
-    [SerializeField] GameObject bodyObject;
-    [SerializeField] GameObject discsScroll;
-    [SerializeField] List<Button> discsScrollContent;
-    [SerializeField] GameObject discsCustom;
-    [SerializeField] GameObject vinylScroll;
-    [SerializeField] List<Button> vinylScrollContent;
-    [SerializeField] GameObject tintObject;
-    [SerializeField] GameObject hydraulicsObject;
-    [SerializeField] TextMeshProUGUI hydraulicsText;
-    [SerializeField] Sprite activeButtonSprite;
-    [SerializeField] Sprite inactiveButtonSprite;
-    [SerializeField] Slider stylingSliderValue;
-    [SerializeField] GameObject stylingSliderObject;
-    [SerializeField] TextMeshProUGUI stylingSliderNameText;
-    [SerializeField] TextMeshProUGUI stylingSliderValueText;
-    [SerializeField] ColorCircle colorCircle;
+    [SerializeField]
+    private List<TuningButton> tuningButtons;
+    [SerializeField] private List<Slider> tuningCurrentSlider;
+    [SerializeField] private List<TextMeshProUGUI> tuningCurrentText;
+    [SerializeField] private List<Slider> tuningFutureSlider;
+    [SerializeField] private List<TextMeshProUGUI> tuningFutureText;
+    [SerializeField] private List<TextMeshProUGUI> tuningDifferenceText;
+    [SerializeField] private TextMeshProUGUI balanceText;
+    [SerializeField] private TextMeshProUGUI priceText;
+    [SerializeField] private TextMeshProUGUI buyButtonText;
+    [SerializeField] private GameObject buyGameObject;
+    [SerializeField] private GameObject buyDonateButtonGameObject;
+    [SerializeField] private RectTransform buyTransform;
+    [SerializeField] private GameObject bodyScrollObject;
+    [SerializeField] private GameObject bodyContentObject;
+    [SerializeField] private Button bodyArrowNext;
+    [SerializeField] private Button bodyArrowPrevious;
+    [SerializeField] private TextMeshProUGUI bodyPartNameText;
+    [SerializeField] private GameObject colorWheel;
+    [SerializeField] private GameObject transparencySlider;
+    [SerializeField] private GameObject bodyObject;
+    [SerializeField] private GameObject discsScroll;
+    [SerializeField] private GameObject discsCustom;
+    [SerializeField] private GameObject vinylScroll;
+    [SerializeField] private GameObject tintObject;
+    [SerializeField] private GameObject hydraulicsObject;
+    [SerializeField] private TextMeshProUGUI hydraulicsText;
+    [SerializeField] private Sprite activeButtonSprite;
+    [SerializeField] private Sprite inactiveButtonSprite;
+    [SerializeField] private Slider stylingSliderValue;
+    [SerializeField] private GameObject stylingSliderObject;
+    [SerializeField] private TextMeshProUGUI stylingSliderNameText;
+    [SerializeField] private TextMeshProUGUI stylingSliderValueText;
+    [SerializeField] private ColorCircle colorCircle;
 
-    private int balance = 0;
-    private int price = 0;
-    private Action onMoneySelect;
+    private int _balance = 0;
+    private int _price = 0;
+    private Action _onMoneySelect;
 
-    private Dictionary<TuningDetails, (int level, int price, int donatePrice)> tuningLevels;
-    private int[][] tuningUpgradeValues = new int[(int)TuningDetails.Max][]
+    private Dictionary<TuningDetails, (int level, int price, int donatePrice)> _tuningLevels;
+    private readonly int[][] _tuningUpgradeValues = new int[(int)TuningDetails.Max][]
     {
         new [] {10, 5, 0, -5},
         new [] {5, 5, 0, -5},
@@ -90,100 +85,96 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         new [] {0, 10, 0, 0},
         new [] {0, 0, 0, 10},
     };
-    private TuningDetails currentTuningDetail;
+    private TuningDetails _currentTuningDetail;
+    private bool _isInitialTuning = true;
 
-    private Dictionary<TuningDetails, string> tuningUpgradeName = new Dictionary<TuningDetails, string>
+    private readonly Dictionary<TuningDetails, string> _tuningUpgradeName = new Dictionary<TuningDetails, string>
     {
-        { TuningDetails.Brakes, "“ÓÏÓÁ‡ " },
-        { TuningDetails.ChipTuning, "◊ËÔ-Ú˛ÌËÌ„ " },
-        { TuningDetails.Engine, "ƒ‚Ë„‡ÚÂÎ¸ " },
-        { TuningDetails.Suspension, "œÓ‰‚ÂÒÍ‡ " },
-        { TuningDetails.Tires, "ÿËÌ˚ " },
-        { TuningDetails.Transmission, "“‡ÌÒÏËÒÒËˇ " },
-        { TuningDetails.Turbocharging, "“Û·ÓÌ‡‰‰Û‚ " }
+        { TuningDetails.Brakes, "–¢–æ—Ä–º–æ–∑–∞ " },
+        { TuningDetails.ChipTuning, "–ß–∏–ø-—Ç—é–Ω–∏–Ω–≥ " },
+        { TuningDetails.Engine, "–î–≤–∏–≥–∞—Ç–µ–ª—å " },
+        { TuningDetails.Suspension, "–ü–æ–¥–≤–µ—Å–∫–∞ " },
+        { TuningDetails.Tires, "–®–∏–Ω—ã " },
+        { TuningDetails.Transmission, "–¢—Ä–∞–Ω—Å–º–∏—Å—Å–∏—è " },
+        { TuningDetails.Turbocharging, "–¢—É—Ä–±–æ–Ω–∞–¥–¥—É–≤ " }
     };
 
-    private Dictionary<VehicleTuningType, string> stylingUpgradeName = new Dictionary<VehicleTuningType, string>
+    private readonly Dictionary<VehicleTuningType, string> _stylingUpgradeName = new Dictionary<VehicleTuningType, string>
     {
-        { VehicleTuningType.Exhaust, "¬˚ıÎÓÔ π " },
-        { VehicleTuningType.FrontBumper, "œÂÂ‰ÌËÈ ·‡ÏÔÂ π " },
-        { VehicleTuningType.Hood, " ‡ÔÓÚ π " },
-        { VehicleTuningType.Hydraulics, "√Ë‰‡‚ÎËÍÛ " },            //œÓÒÚ‡‚ËÚ¸ ËÎË ÒÌˇÚ¸
-        { VehicleTuningType.Nitro, "ÕËÚÓ " },
-        { VehicleTuningType.RearBumper, "«‡‰ÌËÈ ·‡ÏÔÂ π " },
-        { VehicleTuningType.Roof, " ˚¯‡ π " },
-        { VehicleTuningType.SideSkirt, "¡ÓÍÓ‚‡ˇ ˛·Í‡ π " },
-        { VehicleTuningType.Spoiler, "—ÔÓÈÎÂ π " },
-        { VehicleTuningType.Wheels, "ƒËÒÍË π " }
+        { VehicleTuningType.Exhaust, "–í—ã—Ö–ª–æ–ø ‚Ññ " },
+        { VehicleTuningType.FrontBumper, "–ü–µ—Ä–µ–¥–Ω–∏–π –±–∞–º–ø–µ—Ä ‚Ññ " },
+        { VehicleTuningType.Hood, "–ö–∞–ø–æ—Ç ‚Ññ " },
+        { VehicleTuningType.Hydraulics, "–ì–∏–¥—Ä–∞–≤–ª–∏–∫—É " },            //–ü–æ—Å—Ç–∞–≤–∏—Ç—å –∏–ª–∏ —Å–Ω—è—Ç—å
+        { VehicleTuningType.Nitro, "–ù–∏—Ç—Ä–æ " },
+        { VehicleTuningType.RearBumper, "–ó–∞–¥–Ω–∏–π –±–∞–º–ø–µ—Ä ‚Ññ " },
+        { VehicleTuningType.Roof, "–ö—Ä—ã—à–∞ ‚Ññ " },
+        { VehicleTuningType.SideSkirt, "–ë–æ–∫–æ–≤–∞—è —é–±–∫–∞ ‚Ññ " },
+        { VehicleTuningType.Spoiler, "–°–ø–æ–π–ª–µ—Ä ‚Ññ " },
+        { VehicleTuningType.Wheels, "–î–∏—Å–∫–∏ ‚Ññ " }
     };
 
-    private Dictionary<ColorsType, string> stylingColorName = new Dictionary<ColorsType, string>
+    private readonly Dictionary<ColorsType, string> _stylingColorName = new Dictionary<ColorsType, string>
     {
-        { ColorsType.TonerFront, "“ÓÌËÓ‚Í‡ ÔÂÂ‰ÌËı ÒÚÂÍÓÎ" },
-        { ColorsType.TonerSide, "“ÓÌËÓ‚Í‡ ·ÓÍÓ‚˚ı ÒÚÂÍÓÎ" },
-        { ColorsType.TonerRear, "“ÓÌËÓ‚Í‡ Á‡‰ÌËı ÒÚÂÍÓÎ" },
-        { ColorsType.Wheels, "œÂÂÍ‡ÒÍ‡ ‰ËÒÍÓ‚" },
-        { ColorsType.Body, "œÂÂÍ‡ÒÍ‡ ÍÛÁÓ‚‡" },
-        { ColorsType.Headlights, "—ÏÂÌ‡ ˆ‚ÂÚ‡ Ù‡" },
-        { ColorsType.Neon, "—ÏÂÌ‡ ˆ‚ÂÚ‡ ÌÂÓÌ‡" }
+        { ColorsType.TonerFront, "–¢–æ–Ω–∏—Ä–æ–≤–∫–∞ –ø–µ—Ä–µ–¥–Ω–∏—Ö —Å—Ç–µ–∫–æ–ª" },
+        { ColorsType.TonerSide, "–¢–æ–Ω–∏—Ä–æ–≤–∫–∞ –±–æ–∫–æ–≤—ã—Ö —Å—Ç–µ–∫–æ–ª" },
+        { ColorsType.TonerRear, "–¢–æ–Ω–∏—Ä–æ–≤–∫–∞ –∑–∞–¥–Ω–∏—Ö —Å—Ç–µ–∫–æ–ª" },
+        { ColorsType.Wheels, "–ü–µ—Ä–µ–∫—Ä–∞—Å–∫–∞ –¥–∏—Å–∫–æ–≤" },
+        { ColorsType.Body, "–ü–µ—Ä–µ–∫—Ä–∞—Å–∫–∞ –∫—É–∑–æ–≤–∞" },
+        { ColorsType.Headlights, "–°–º–µ–Ω–∞ —Ü–≤–µ—Ç–∞ —Ñ–∞—Ä" },
+        { ColorsType.Neon, "–°–º–µ–Ω–∞ —Ü–≤–µ—Ç–∞ –Ω–µ–æ–Ω–∞" }
     };
 
-    private Dictionary<WheelEditType, string> stylingDiscsName = new Dictionary<WheelEditType, string>
+    private readonly Dictionary<WheelEditType, string> _stylingDiscsName = new Dictionary<WheelEditType, string>
     {
-        { WheelEditType.FrontOffset, "¬˚ÎÂÚ ÔÂÂ‰ÌËı" },
-        { WheelEditType.BackOffset, "¬˚ÎÂÚ Á‡‰ÌËı" },
-        { WheelEditType.FrontAlignment, "–‡Á‚‡Î ÔÂÂ‰ÌËı" },
-        { WheelEditType.BackAlignment, "–‡Á‚‡Î Á‡‰ÌËı" },
-        { WheelEditType.Width, "ÿËËÌ‡ ÍÓÎÂÒ" }
+        { WheelEditType.FrontOffset, "–í—ã–ª–µ—Ç –ø–µ—Ä–µ–¥–Ω–∏—Ö" },
+        { WheelEditType.BackOffset, "–í—ã–ª–µ—Ç –∑–∞–¥–Ω–∏—Ö" },
+        { WheelEditType.FrontAlignment, "–†–∞–∑–≤–∞–ª –ø–µ—Ä–µ–¥–Ω–∏—Ö" },
+        { WheelEditType.BackAlignment, "–†–∞–∑–≤–∞–ª –∑–∞–¥–Ω–∏—Ö" },
+        { WheelEditType.Width, "–®–∏—Ä–∏–Ω–∞ –∫–æ–ª–µ—Å" }
     };
-    private WheelEditType currentEditWheelType;
-    private float currentEditWheelMultiplier;
+    private WheelEditType _currentEditWheelType;
+    private float _currentEditWheelMultiplier;
 
-    private Vector2 tuningBuyPos = new Vector2(-363, 265);
-    private Vector2 stylingBuyPos = new Vector2(-363, 195);
+    private Vector2 _tuningBuyPos = new Vector2(-363, 265);
+    private Vector2 _stylingBuyPos = new Vector2(-363, 195);
 
-    private Image activeButtonImage;
-    private Image activeSecondaryButtonImage;
-    private GameObject activeContent;
+    private Image _activeButtonImage;
+    private Image _activeSecondaryButtonImage;
+    private GameObject _activeContent;
 
-    private int bodyContentShownNum = -1;
-    private VehicleTuningType currentBodyDetailType;
-    private List<(int id, int price)> bodyDetails = new();
-    private List<(int id, int price)> bodyDetailsTemp = new();
+    private int _bodyContentShownNum = -1;
+    private VehicleTuningType _currentBodyDetailType;
+    private List<(int id, int price)> _bodyDetails = new();
+    private List<(int id, int price)> _bodyDetailsTemp = new();
+    private readonly Color _yellowColor = new Color(1f, 213 / 255f, 84 / 255f);
+    private readonly Color _purpleColor = new Color(154 / 255f, 118 / 255f, 1);
+    private bool _selectedColorTransparency;
+    private ColorsType _selectedColorType;
+    private int[] _colorsPrices = new int[8];
+    private ColorsType[] _transparentColors = new[] {ColorsType.TonerFront, ColorsType.TonerSide, ColorsType.TonerRear};
 
-    private Color yellowColor = new Color(1f, 213 / 255f, 84 / 255f);
-    private Color purpleColor = new Color(154 / 255f, 118 / 255f, 1);
-    private int colorPrice = 0;
-    private bool selectedColorTransparency;
-    private ColorsType selectedColorType;
-    private ColorsType[] transparentColors = new[] {ColorsType.TonerFront, ColorsType.TonerSide, ColorsType.TonerRear};
+    private Dictionary<WheelEditType, int> _editWheelsPrices;
 
-    private Dictionary<WheelEditType, int> editWheelsPrices;
+    private int _hydraulicsInstallPrice = 0;
+    private int _hydraulicsRemovePrice = 0;
+    private bool _isInstalledHydraulics;
 
-    private int hydraulicsInstallPrice = 0;
-    private int hydraulicsRemovePrice = 0;
-    private bool isInstalledHydraulics;
+    private int _nitroLevel = 0;
+    private List<int> _nitroPrices;
 
-    private int nitroLevel = 0;
-    private List<int> nitroPrices;
+    private int _suspensionPrice = 0;
 
-    private int suspensionPrice = 0;
-
-    private Color inactiveColor = new Color(39 / 255f, 37 / 255f, 55 / 255f, 0.4f);
-    private Color activeColor = new Color(39 / 255f, 37 / 255f, 55 / 255f, 0.8f);
-
-    private Dictionary<string, int> vinylPrices;
-
-    private Dictionary<int, int> wheelsPrices;
+    private readonly Color _inactiveColor = new Color(39 / 255f, 37 / 255f, 55 / 255f, 0.4f);
+    private readonly Color _activeColor = new Color(39 / 255f, 37 / 255f, 55 / 255f, 0.8f);
 
 
     private void Awake()
     {
-        tuningLevels = new();
-        nitroPrices = new List<int>();
-        editWheelsPrices = new();
+        _tuningLevels = new();
+        _nitroPrices = new List<int>();
+        _editWheelsPrices = new();
 
-        activeButtonImage = tuningScroll[0].GetComponent<Image>();
+        _activeButtonImage = tuningScroll[0].GetComponent<Image>();
 
         tuningButton.onClick.AddListener(() => OpenTuning());
         stylingButton.onClick.AddListener(() => OpenStyling());
@@ -192,6 +183,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         buyDonateButton.onClick.AddListener(() => ShowDonateConfirmation());
         buyCancelButton.onClick.AddListener(() => CloseConfirmation());
 
+        bodyScroll[0].onClick.AddListener(() => OpenStyling());
         bodyScroll[0].onClick.AddListener(() => OpenStyling());
         bodyScroll[1].onClick.AddListener(() => BodyContentPressed(VehicleTuningType.RearBumper, bodyScroll[1]));
         bodyScroll[2].onClick.AddListener(() => BodyContentPressed(VehicleTuningType.FrontBumper, bodyScroll[2]));
@@ -224,7 +216,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         }
         tintScroll[0].onClick.AddListener(() => OpenStyling());
 
-        stylingScroll[0].onClick.AddListener(() => StylingBodyPressed(stylingScroll[0]));
+        stylingScroll[0].onClick.AddListener(() => StylingBodyPressed());
         stylingScroll[1].onClick.AddListener(() => StylingColorPress(ColorsType.Body, stylingScroll[1]));
         stylingScroll[2].onClick.AddListener(() => StylingDiscsPress(stylingScroll[2]));
         stylingScroll[3].onClick.AddListener(() => StylingDiscsCustomPress());
@@ -243,6 +235,8 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         testServer.GetEditWheels();
         testServer.GetWheels();
         testServer.GetVinyls();
+        _selectedColorType = ColorsType.TonerFront;
+        testServer.GetColorsPrice(_selectedColorType);
     }
 
     private void OpenTuning()
@@ -253,7 +247,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
             tuningFutureText[i].text = "";
             tuningDifferenceText[i].text = "";
         }
-        buyTransform.anchoredPosition = tuningBuyPos;
+        buyTransform.anchoredPosition = _tuningBuyPos;
         buyDonateButtonGameObject.SetActive(true);
         SetActiveContent(null);
         SetActiveButtonImage(null);
@@ -270,7 +264,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         tuningGameObject.SetActive(false);
         stylingGameObject.SetActive(true);
         buyGameObject.SetActive(false);
-        buyTransform.anchoredPosition = stylingBuyPos;
+        buyTransform.anchoredPosition = _stylingBuyPos;
         buyDonateButtonGameObject.SetActive(false);
         discsCustom.SetActive(false);
         tintObject.SetActive(false);
@@ -281,30 +275,30 @@ public class UIHandler : MonoBehaviour, ITuningScreen
 
     private void SetActiveButtonImage(Image image, Sprite sprite = null)
     {
-        if(activeButtonImage) activeButtonImage.sprite = inactiveButtonSprite;
+        if(_activeButtonImage) _activeButtonImage.sprite = inactiveButtonSprite;
         if (image)
         {
-            activeButtonImage = image;
-            activeButtonImage.sprite = sprite ? sprite: activeButtonSprite;
+            _activeButtonImage = image;
+            _activeButtonImage.sprite = sprite ? sprite: activeButtonSprite;
         }
     }
     private void SetActiveSecondaryButtonImage(Image image)
     {
-        if (activeSecondaryButtonImage) activeSecondaryButtonImage.color = inactiveColor;
+        if (_activeSecondaryButtonImage) _activeSecondaryButtonImage.color = _inactiveColor;
         if (image)
         {
-            activeSecondaryButtonImage = image;
-            activeSecondaryButtonImage.color = activeColor;
+            _activeSecondaryButtonImage = image;
+            _activeSecondaryButtonImage.color = _activeColor;
         }
     }
 
     private void SetActiveContent(GameObject go)
     {
-        if (activeContent) activeContent.SetActive(false);
+        if (_activeContent) _activeContent.SetActive(false);
         if (go)
         {
-            activeContent = go;
-            activeContent.SetActive(true);
+            _activeContent = go;
+            _activeContent.SetActive(true);
         }
     }
 
@@ -313,19 +307,23 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         SetActiveButtonImage(button ? button.GetComponent<Image>() : null);
         SetActiveContent(content);
     }
-    private void SelectItem(int price, string upgradeName, Action action, string buyButtonText = " ”œ»“‹")
+    private void SelectItem(int price, string upgradeName, Action action, string buyButtonText = "–ö–£–ü–ò–¢–¨")
     {
+        if (action == null)
+        {
+            return;
+        }
         string tempPriceText = NumberSplit(price);
         this.buyButtonText.text = buyButtonText;
         priceText.text = tempPriceText;
         buyGameObject.SetActive(true);
-        this.price = price;
+        this._price = price;
         buyButton.onClick.RemoveAllListeners();
         buyButton.onClick.AddListener(ShowConfirmation);
-        onMoneySelect = () => {
+        _onMoneySelect = () => {
             buyUpgradeName.text = upgradeName;
             buyPriceAcceptText.text = $"${tempPriceText}";
-            buyPriceAcceptText.color = yellowColor;
+            buyPriceAcceptText.color = _yellowColor;
             buyAcceptButton.onClick.RemoveAllListeners();
             buyAcceptButton.onClick.AddListener(new UnityEngine.Events.UnityAction(action));
             buyAcceptButton.onClick.AddListener(() => { buyAcceptObject.SetActive(false); });
@@ -339,28 +337,28 @@ public class UIHandler : MonoBehaviour, ITuningScreen
 
     private void ShowDonateConfirmation()
     {
-        if (tuningLevels[currentTuningDetail].donatePrice > 0)       //donatePrice <= donateBalance
+        if (_tuningLevels[_currentTuningDetail].donatePrice > 0 && _tuningLevels[_currentTuningDetail].level < 5)
         {
-            onMoneySelect?.Invoke();
+            _onMoneySelect?.Invoke();
             buyAcceptObject.SetActive(true);
         }
         buyPriceAcceptText.text = $"${0}";
-        buyPriceAcceptText.color = purpleColor;
+        buyPriceAcceptText.color = _purpleColor;
         buyAcceptButton.onClick.RemoveAllListeners();
         buyAcceptButton.onClick.AddListener(() => 
         {
-            testServer.BuyPerformanceDetail(currentTuningDetail, BuyType.Donate);
-            tuningLevels[currentTuningDetail] = (tuningLevels[currentTuningDetail].level, tuningLevels[currentTuningDetail].price, tuningLevels[currentTuningDetail].donatePrice - 1);
+            testServer.BuyPerformanceDetail(_currentTuningDetail, BuyType.Donate);
+            _tuningLevels[_currentTuningDetail] = (_tuningLevels[_currentTuningDetail].level, _tuningLevels[_currentTuningDetail].price, _tuningLevels[_currentTuningDetail].donatePrice - 1);
             buyAcceptObject.SetActive(false);
         });
-        TuningScrollPress(currentTuningDetail);
+        TuningScrollPress(_currentTuningDetail);
     }
 
     private void ShowConfirmation()
     {
-        if(price <= balance)
+        if(_price <= _balance)
         {
-            onMoneySelect?.Invoke();
+            _onMoneySelect?.Invoke();
             buyAcceptObject.SetActive(true);
         }
     }
@@ -370,28 +368,41 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         buyAcceptObject.SetActive(false);
     }
 
-    private void BuyRightContentSliderPressed(string name, int price)
-    {
-        buyUpgradeName.text = name;
-        priceText.text = "$" + price;
-    }
-
     private void TuningScrollPress(TuningDetails type)
     {
-        SelectItem(tuningLevels[type].price, $"{tuningUpgradeName[type]}{tuningLevels[type].level + 1} ÛÓ‚Ìˇ", () => BuyTuningDetail(type));
+        string upgradeName = $"{_tuningUpgradeName[type]}{_tuningLevels[type].level + 1} —É—Ä–æ–≤–Ω—è";
+        int price = _tuningLevels[type].price;
 
-        currentTuningDetail = type;
+        if (_tuningLevels[type].level < 5)
+        {
+            SelectItem(price, upgradeName, () => BuyTuningDetail(type));
+            for (int i = 0; i < 4; i++)
+            {
+                int upgradeValue = _tuningUpgradeValues[(int)type][i];
+                float futureValue = tuningCurrentSlider[i].value + upgradeValue;
+                tuningFutureSlider[i].value = futureValue;
+                tuningFutureText[i].text = (futureValue).ToString();
+                tuningDifferenceText[i].text = upgradeValue >= 0 ? $"+{upgradeValue}" : upgradeValue.ToString();
+            }
+        }
+        else
+        {
+            buyGameObject.SetActive(false);
+            SelectItem(price, upgradeName, null);
+            for (int i = 0; i < 4; i++)
+            {
+                int upgradeValue = _tuningUpgradeValues[(int)type][i];
+                float futureValue = upgradeValue;
+                tuningFutureSlider[i].value = futureValue;
+                tuningFutureText[i].text = "";
+                tuningDifferenceText[i].text = "";
+            }
+        } 
+
+        _currentTuningDetail = type;
 
         SetActiveButtonImage(tuningScroll[(int)type].GetComponent<Image>());
 
-        for (int i = 0; i < 4; i++)
-        {
-            int upgradeValue = tuningUpgradeValues[(int)type][i];
-            float futureValue = tuningCurrentSlider[i].value + upgradeValue;
-            tuningFutureSlider[i].value = futureValue;
-            tuningFutureText[i].text = (futureValue).ToString();
-            tuningDifferenceText[i].text = upgradeValue >= 0 ? $"+{upgradeValue}" : upgradeValue.ToString();
-        }
     }
 
     private void BuyTuningDetail(TuningDetails type)
@@ -400,7 +411,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
         TuningScrollPress(type);
     }
 
-    private void StylingBodyPressed(Button button)
+    private void StylingBodyPressed()
     {
         SetActiveButtonImage(null);
         SetActiveContent(null);
@@ -413,26 +424,26 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     {
         SetActiveButtonImage(button.GetComponent<Image>());
         buyGameObject.SetActive(false);
-        bodyContentShownNum = -1;
-        bodyPartNameText.text = "—“¿Õƒ¿–“Õ€…";
-        currentBodyDetailType = type;
+        _bodyContentShownNum = -1;
+        bodyPartNameText.text = "–°–¢–ê–ù–î–ê–†–¢–ù–´–ô";
+        _currentBodyDetailType = type;
         testServer.GetDetails(type);
     }
 
     private void BodyContentArrowPressed(bool isForward)
     {
-        bodyContentShownNum += isForward ? 1 : -1;
-        if (bodyContentShownNum < -1) bodyContentShownNum = bodyDetails.Count - 1;
-        else if (bodyContentShownNum >= bodyDetails.Count) bodyContentShownNum = -1;
-        if(bodyContentShownNum != -1)
+        _bodyContentShownNum += isForward ? 1 : -1;
+        if (_bodyContentShownNum < -1) _bodyContentShownNum = _bodyDetails.Count - 1;
+        else if (_bodyContentShownNum >= _bodyDetails.Count) _bodyContentShownNum = -1;
+        if(_bodyContentShownNum != -1)
         {
-            int id = bodyDetails[bodyContentShownNum].id;
-            bodyPartNameText.text = $"π {id}";
-            SelectItem(bodyDetails[bodyContentShownNum].price, $"{stylingUpgradeName[currentBodyDetailType]}{id}", () => testServer.BuyBodyDetail(id, currentBodyDetailType));
+            int id = _bodyDetails[_bodyContentShownNum].id;
+            bodyPartNameText.text = $"‚Ññ {id}";
+            SelectItem(_bodyDetails[_bodyContentShownNum].price, $"{_stylingUpgradeName[_currentBodyDetailType]}{id}", () => testServer.BuyBodyDetail(id, _currentBodyDetailType));
         }
         else
         {
-            bodyPartNameText.text = "—“¿Õƒ¿–“Õ€…";
+            bodyPartNameText.text = "–°–¢–ê–ù–î–ê–†–¢–ù–´–ô";
             RemoveSelectItem();
         }
     }
@@ -440,21 +451,22 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     private void StylingColorPress(ColorsType type, Button button)
     {
         RemoveSelectItem();
+        
+        _selectedColorType = type;
 
-        testServer.GetColorsPrice(type);
+        SelectItem(_colorsPrices[(int)type], _stylingColorName[_selectedColorType], () => BuyColor());
 
-        selectedColorTransparency = transparentColors.Contains(type);
-        selectedColorType = type;
+        _selectedColorTransparency = _transparentColors.Contains(type);
         StylingButtonPress(button, colorWheel);
-        transparencySlider.SetActive(transparentColors.Contains(type));
+        transparencySlider.SetActive(_transparentColors.Contains(type));
     }
 
     private void BuyColor()
     {
         Vector4 temp = colorCircle.GetColor();
         temp *= 255;
-        temp.w = selectedColorTransparency ? temp.w : 255;
-        testServer.BuyColor(selectedColorType, (int)temp.x, (int)temp.y, (int)temp.z, (int)temp.w);
+        temp.w = _selectedColorTransparency ? temp.w : 255;
+        testServer.BuyColor(_selectedColorType, (int)temp.x, (int)temp.y, (int)temp.z, (int)temp.w);
     }
 
     private void StylingDiscsPress(Button button)
@@ -467,7 +479,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     {
         buyGameObject.SetActive(true);
         SetActiveSecondaryButtonImage(button.GetComponent<Image>());
-        SelectItem(price, $"{stylingUpgradeName[VehicleTuningType.Wheels]}{name}", () => testServer.BuyWheels(name));
+        SelectItem(price, $"{_stylingUpgradeName[VehicleTuningType.Wheels]}{name}", () => testServer.BuyWheels(name));
     }
 
 
@@ -493,36 +505,36 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     private void StylingDiscsCustomContentPress(WheelEditType type, Button button)
     {
         StylingButtonPress(button, stylingSliderObject);
-        currentEditWheelType = type;
+        _currentEditWheelType = type;
         switch (type)
         {
             case (WheelEditType.FrontOffset):
                 ChangeSliderValues(0, 15, 0, StylingSliderPositiveDiscs);
-                currentEditWheelMultiplier = 0.01f;
+                _currentEditWheelMultiplier = 0.01f;
                 break;
 
             case (WheelEditType.BackOffset):
                 ChangeSliderValues(0, 15, 0, StylingSliderPositiveDiscs);
-                currentEditWheelMultiplier = 0.01f;
+                _currentEditWheelMultiplier = 0.01f;
                 break;
 
             case (WheelEditType.FrontAlignment):
                 ChangeSliderValues(0, 20, 0, StylingSliderDegrees);
-                currentEditWheelMultiplier = 1;
+                _currentEditWheelMultiplier = 1;
                 break;
 
             case (WheelEditType.BackAlignment):
                 ChangeSliderValues(0, 20, 0, StylingSliderDegrees);
-                currentEditWheelMultiplier = 1;
+                _currentEditWheelMultiplier = 1;
                 break;
 
             case (WheelEditType.Width):
                 ChangeSliderValues(5, 15, 10, StylingSliderMultiplication);
-                currentEditWheelMultiplier = 0.1f;
+                _currentEditWheelMultiplier = 0.1f;
                 break;
         }
         stylingScrollObject.SetActive(false);
-        SelectItem(editWheelsPrices[type], $"{stylingDiscsName[type]} {currentEditWheelMultiplier * stylingSliderValue.value}", () => BuyDiscsCustom());
+        SelectItem(_editWheelsPrices[type], $"{_stylingDiscsName[type]} {_currentEditWheelMultiplier * stylingSliderValue.value}", () => BuyDiscsCustom());
         buyButton.onClick.AddListener(() => BuyDiscsCustomPress());
 
         buyGameObject.SetActive(true);
@@ -530,11 +542,11 @@ public class UIHandler : MonoBehaviour, ITuningScreen
 
     private void BuyDiscsCustomPress()
     {
-        buyUpgradeName.text = $"{stylingDiscsName[currentEditWheelType]} {currentEditWheelMultiplier * stylingSliderValue.value}";
+        buyUpgradeName.text = $"{_stylingDiscsName[_currentEditWheelType]} {_currentEditWheelMultiplier * stylingSliderValue.value}";
     }
     private void BuyDiscsCustom()
     {
-        testServer.BuyEditWheels(currentEditWheelType, currentEditWheelMultiplier * stylingSliderValue.value);
+        testServer.BuyEditWheels(_currentEditWheelType, _currentEditWheelMultiplier * stylingSliderValue.value);
     }
 
     private void StylingVinylPressed(Button button)
@@ -547,7 +559,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     {
         buyGameObject.SetActive(true);
         SetActiveSecondaryButtonImage(button.GetComponent<Image>());
-        SelectItem(price, "¬ËÌËÎ π " + name.Replace("Vinyl ", ""), () => testServer.BuyVinyls(name));
+        SelectItem(price, "–í–∏–Ω–∏–ª ‚Ññ " + name.Replace("Vinyl ", ""), () => testServer.BuyVinyls(name));
     }
 
     private void StylingTintPress()
@@ -563,53 +575,45 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     private void StylingSuspensionPress(Button button)
     {
         StylingButtonPress(button, stylingSliderObject);
-        stylingSliderNameText.text = "¬€—Œ“¿";
+        stylingSliderNameText.text = "–í–´–°–û–¢–ê";
         ChangeSliderValues(0, 9, 0, StylingSliderNegative);
-        SelectItem(suspensionPrice, $"{tuningUpgradeName[TuningDetails.Suspension]} -{stylingSliderValue.value}", () => BuyDiscsCustom());
+        SelectItem(_suspensionPrice, $"{_tuningUpgradeName[TuningDetails.Suspension]} -{stylingSliderValue.value}", () => BuyDiscsCustom());
         buyButton.onClick.AddListener(BuySuspensionPress);
     }
 
     private void BuySuspensionPress()
     {
-        buyUpgradeName.text = $"{tuningUpgradeName[TuningDetails.Suspension]} -{stylingSliderValue.value}";
-    }
-    private void BuySuspension()
-    {
-        testServer.BuySuspension(stylingSliderValue.value);
+        buyUpgradeName.text = $"{_tuningUpgradeName[TuningDetails.Suspension]} -{stylingSliderValue.value}";
     }
 
 
     private void StylingNitroPress(Button button)
     {
         StylingButtonPress(button, stylingSliderObject);
-        stylingSliderNameText.text = "”–Œ¬≈Õ‹";
+        stylingSliderNameText.text = "–£–†–û–í–ï–ù–¨";
         ChangeSliderValues(0, 3, 0, StylingSliderNitro);
-        SelectItem(nitroPrices[nitroLevel], $"ÕËÚÓ ÛÓ‚ÂÌ¸ {stylingSliderValue.value}", () => BuyDiscsCustom());
+        SelectItem(_nitroPrices[_nitroLevel], $"–ù–∏—Ç—Ä–æ —É—Ä–æ–≤–µ–Ω—å {stylingSliderValue.value}", () => BuyDiscsCustom());
         buyButton.onClick.AddListener(BuyNitroPress);
     }
 
     private void BuyNitroPress()
     {
-        buyUpgradeName.text = $"ÕËÚÓ ÛÓ‚ÂÌ¸ {stylingSliderValue.value}";
-        buyPriceAcceptText.text = $"${nitroPrices[(int)stylingSliderValue.value]}";
-    }
-    private void BuyNitro()
-    {
-        testServer.BuyNitro((int)stylingSliderValue.value);
+        buyUpgradeName.text = $"–ù–∏—Ç—Ä–æ —É—Ä–æ–≤–µ–Ω—å {stylingSliderValue.value}";
+        buyPriceAcceptText.text = $"${_nitroPrices[(int)stylingSliderValue.value]}";
     }
 
     private void StylingHydraulicsPress(Button button)
     {
         if(button) StylingButtonPress(button, hydraulicsObject);
-        if (isInstalledHydraulics)
+        if (_isInstalledHydraulics)
         {
-            SelectItem(hydraulicsRemovePrice, "—ÌˇÚËÂ „Ë‰‡‚ÎËÍË", () => testServer.BuyHydraulic(true), "—Õﬂ“‹");
-            hydraulicsText.text = "”—“¿ÕŒ¬À≈Õ¿";
+            SelectItem(_hydraulicsRemovePrice, "–°–Ω—è—Ç–∏–µ –≥–∏–¥—Ä–∞–≤–ª–∏–∫–∏", () => testServer.BuyHydraulic(true), "–°–ù–Ø–¢–¨");
+            hydraulicsText.text = "–£–°–¢–ê–ù–û–í–õ–ï–ù–ê";
         }
         else
         {
-            SelectItem(hydraulicsInstallPrice, "”ÒÚ‡ÌÓ‚Í‡ „Ë‰‡‚ÎËÍË", () => testServer.BuyHydraulic(false), "”—“¿ÕŒ¬»“‹");
-            hydraulicsText.text = "Œ“—”“—“¬”≈“";
+            SelectItem(_hydraulicsInstallPrice, "–£—Å—Ç–∞–Ω–æ–≤–∫–∞ –≥–∏–¥—Ä–∞–≤–ª–∏–∫–∏", () => testServer.BuyHydraulic(false), "–£–°–¢–ê–ù–û–í–ò–¢–¨");
+            hydraulicsText.text = "–û–¢–°–£–¢–°–¢–í–£–ï–¢";
         }
     }
 
@@ -625,7 +629,7 @@ public class UIHandler : MonoBehaviour, ITuningScreen
 
     private void StylingSliderDegrees(float value)
     {
-        stylingSliderValueText.text = value + "∞";
+        stylingSliderValueText.text = value + "¬∞";
     }
 
     private void StylingSliderMultiplication(float value)
@@ -635,9 +639,9 @@ public class UIHandler : MonoBehaviour, ITuningScreen
 
     private void StylingSliderNitro(float value)
     {
-        if(value <= 0) stylingSliderValueText.text = "—“¿Õƒ¿–“";
+        if(value <= 0) stylingSliderValueText.text = "–°–¢–ê–ù–î–ê–†–¢";
         else stylingSliderValueText.text = value.ToString();
-        priceText.text = nitroPrices[(int)value].ToString();
+        priceText.text = _nitroPrices[(int)value].ToString();
     }
 
     private string NumberSplit(int number)
@@ -664,12 +668,12 @@ public class UIHandler : MonoBehaviour, ITuningScreen
     public void SetBalance(int balance)
     {
         balanceText.text = NumberSplit(balance);
-        this.balance = balance;
+        this._balance = balance;
     }
 
     public void AddPerformanceDetail(TuningDetails type, int currentLevel, int price, int donateUpgrades)
     {
-        tuningLevels[type] = (currentLevel, price, donateUpgrades);
+        _tuningLevels[type] = (currentLevel, price, donateUpgrades);
         if(type < TuningDetails.Max)
         {
             tuningButtons[(int)type].SetLevel(currentLevel);
@@ -679,83 +683,89 @@ public class UIHandler : MonoBehaviour, ITuningScreen
                 tuningCurrentSlider[i].value = 0;
                 for(TuningDetails x = TuningDetails.Engine; x < TuningDetails.Max; x++)
                 {
-                    temp += tuningUpgradeValues[(int)x][i] * tuningLevels[x].level;
+                    temp += _tuningUpgradeValues[(int)x][i] * _tuningLevels[x].level;
                 }
                 tuningCurrentSlider[i].value += temp;
                 tuningCurrentText[i].text = tuningCurrentSlider[i].value.ToString();
             }
         }
+
+        if (!_isInitialTuning)
+        {
+            TuningScrollPress(type);
+        }
     }
 
     public void PerformanceDetailComplete()
     {
-        // OpenTuning();
+        _isInitialTuning = false;
     }
 
     public void AddBodyDetail(int id, int price)
     {
-        bodyDetailsTemp.Add((id, price));
+        _bodyDetailsTemp.Add((id, price));
     }
 
     public void BodyDetailComplete()
     {
-        bodyDetails = bodyDetailsTemp;
-        bodyDetailsTemp = new();
+        _bodyDetails = _bodyDetailsTemp;
+        _bodyDetailsTemp = new();
         SetActiveContent(bodyContentObject);
     }
 
     public void SetColorPrice(int price)
     {
-        colorPrice = price;
-        SelectItem(colorPrice, stylingColorName[selectedColorType], () => BuyColor());
-        buyGameObject.SetActive(true);
+        _colorsPrices[(int)_selectedColorType] = price;
+        if (_selectedColorType < ColorsType.None)
+        {
+            _selectedColorType++;
+            testServer.GetColorsPrice(_selectedColorType);
+        }
     }
 
     public void SetEditWheels(Dictionary<WheelEditType, int> prices)
     {
-        editWheelsPrices = prices;
+        _editWheelsPrices = prices;
     }
 
     public void SetHydraulicsData(int installPrice, int removePrice, bool isInstalled)
     {
-        hydraulicsInstallPrice = installPrice;
-        hydraulicsRemovePrice = removePrice;
-        isInstalledHydraulics = isInstalled;
+        _hydraulicsInstallPrice = installPrice;
+        _hydraulicsRemovePrice = removePrice;
+        _isInstalledHydraulics = isInstalled;
         StylingHydraulicsPress(null);
     }
 
     public void SetNitroData(int currentLevel, int removePrice, int lvl1Price, int lvl2Price, int lvl3Price)
     {
-        nitroPrices.Clear();
-        nitroLevel = currentLevel;
-        nitroPrices.Add(removePrice);
-        nitroPrices.Add(lvl1Price);
-        nitroPrices.Add(lvl2Price);
-        nitroPrices.Add(lvl3Price);
+        _nitroPrices.Clear();
+        _nitroLevel = currentLevel;
+        _nitroPrices.Add(removePrice);
+        _nitroPrices.Add(lvl1Price);
+        _nitroPrices.Add(lvl2Price);
+        _nitroPrices.Add(lvl3Price);
     }
 
     public void SetSuspensionPrice(int price)
     {
-        suspensionPrice = price;
+        _suspensionPrice = price;
     }
 
     public void SetVinyls(Dictionary<string, int> vinyls)
     {
         foreach(var i in vinyls)
         {
-            Button temp = vinylSlider.addDetail();
+            Button temp = vinylSlider.AddDetail();
             temp.onClick.AddListener(() => StylingVinylContentPress(temp, i.Key, i.Value));
         }
-        vinylPrices = vinyls;
     }
 
     public void SetWheels(Dictionary<int, int> wheels)
     {
         foreach (KeyValuePair<int, int> i in wheels)
         {
-            Button temp = wheelsSlider.addDetail();
+            Button temp = wheelsSlider.AddDetail();
             temp.onClick.AddListener(() => StylingDiscsContentPressed(temp, i.Key, i.Value));
         }
-        wheelsPrices = wheels;
     }
 }
